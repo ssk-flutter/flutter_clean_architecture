@@ -5,9 +5,7 @@
 
 
 ## Overview
-A Flutter package that makes it easy and intuitive to implement [Uncle Bob's Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) in Flutter. This package provides basic classes that are tuned to work with Flutter and are designed according to the Clean Architecture.
-
-[Uncle Bob의 Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)를 Flutter에서 쉽고 직관적으로 구현할 수 있게 해주는 Flutter 패키지입니다. 이 패키지는 Flutter와 함께 작동하도록 조정되고 클린 아키텍처에 따라 설계된 기본 클래스를 제공합니다.
+[Uncle Bob의 Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)를 Flutter에서 쉽고 직관적으로 구현할 수 있게 해주는 Flutter 패키지입니다. 이 패키지는 기본 클래스를 제공하는데, 이는 Flutter와 함께 작동하도록 조정되었고 Clean Architecture에 따라 설계되었습니다. 
 
 ## Installation
 
@@ -41,20 +39,27 @@ import 'package:flutter_clean_architecture/flutter_clean_architecture.dart';
 
 ## Flutter Clean Architecture Primer
 ### Introduction
-It is architecture based on the book and blog by Uncle Bob. It is a combination of concepts taken from the Onion Architecture and other architectures. The main focus of the architecture is separation of concerns and scalability. It consists of four main modules: `App`, `Domain`, `Data`, and `Device`.
-
 Uncle Bob의 책과 블로그를 기반으로 한 아키텍처입니다. Onion 아키텍처와 다른 아키텍처에서 가져온 개념의 조합입니다. 아키텍처의 주요 초점은 관심사의 분리와 확장성입니다. `App`, `Domain`, `Data` 및 `Device`의 네 가지 주요 모듈로 구성됩니다.
 
 ### The Dependency Rule
-**Source code dependencies only point inwards**. This means inward modules are neither aware of nor dependent on outer modules. However, outer modules are both aware of and dependent on inner modules. Outer modules represent the mechanisms by which the business rules and policies (inner modules) operate. The more you move inward, the more abstraction is present. The outer you move the more concrete implementations are present. Inner modules are not aware of any classes, functions, names, libraries, etc.. present in the outer modules. They simply represent **rules** and are completely independent from the implementations.
+**소스 코드 종속성은 안쪽만 가리킵니다**. 
+즉, 내부 모듈은 외부 모듈을 인식하지도 종속되지도 않습니다. 
+그러나 외부 모듈은 내부 모듈을 인식하고 의존합니다. 
+외부 모듈은 비즈니스 규칙 및 정책(내부 모듈)이 작동하는 메커니즘을 나타냅니다. 
+더 많이 안으로 들어갈수록 더 많은 추상화가 나타납니다. 
+바깥쪽으로 이동할수록 더 구체적인 구현이 나타납니다. 
+내부 모듈은 외부 모듈에 있는 클래스, 함수, 이름, 라이브러리 등을 인식하지 못합니다. 
+그들은 단순히 **규칙**을 나타내며 구현과 완전히 독립적입니다.
 
-**소스 코드 종속성은 안쪽만 가리킵니다**. 즉, 내부 모듈은 외부 모듈을 인식하지도 종속되지도 않습니다. 그러나 외부 모듈은 내부 모듈을 인식하고 의존합니다. 외부 모듈은 비즈니스 규칙 및 정책(내부 모듈)이 작동하는 메커니즘을 나타냅니다. 더 많이 안으로 들어갈수록 더 많은 추상화가 나타납니다. 바깥쪽으로 이동할수록 더 구체적인 구현이 나타납니다. 내부 모듈은 외부 모듈에 있는 클래스, 함수, 이름, 라이브러리 등을 인식하지 못합니다. 그들은 단순히 **규칙**을 나타내며 구현과 완전히 독립적입니다.
 ### Layers
 
 #### Domain
-The `Domain` module defines the business logic of the application. It is a module that is independent from the development platform i.e. it is written purely in the programming language and does not contain any elements from the platform. In the case of `Flutter`, `Domain` would be written purely in `Dart` without any `Flutter` elements. The reason for that is that `Domain` should only be concerned with the business logic of the application, not with the implementation details. This also allows for easy migration between platforms, should any issues arise.
-
-`도메인` 모듈은 애플리케이션의 비즈니스 로직을 정의합니다. 개발 플랫폼과 독립적인 모듈입니다. 즉, 순전히 프로그래밍 언어로 작성되고 플랫폼의 요소를 포함하지 않습니다. `Flutter`의 경우 `Domain`은 `Flutter` 요소 없이 순전히 `Dart`로 작성됩니다. 그 이유는 `도메인`은 구현 세부 사항이 아니라 애플리케이션의 비즈니스 로직에만 관련되어야 하기 때문입니다. 또한 문제가 발생할 경우 플랫폼 간에 쉽게 마이그레이션할 수 있습니다.
+`Domain` 모듈은 애플리케이션의 비즈니스 로직을 정의합니다. 
+개발 플랫폼과 독립적인 모듈입니다. 
+즉, 순전히 프로그래밍 언어로 작성되고 플랫폼의 요소를 포함하지 않습니다. 
+`Flutter`의 경우 `Domain`은 `Flutter` 요소 없이 순전히 `Dart`로 작성됩니다. 
+그 이유는 `Domain`은 구현 세부 사항이 아니라 애플리케이션의 비즈니스 로직에만 관련되어야 하기 때문입니다. 
+또한 문제가 발생할 경우 플랫폼 간에 쉽게 마이그레이션할 수 있습니다.
 
 ##### Contents of Domain
 `Domain` is made up of several things.
@@ -80,7 +85,7 @@ The `Domain` module defines the business logic of the application. It is a modul
 
 `도메인`은 여러 가지로 구성되어 있습니다.
 * **엔터티**
-   * 전사적 비즈니스 규칙
+   * 전사적(Enterprise-wide) 비즈니스 규칙
    * 메서드를 포함할 수 있는 클래스로 구성
    * 애플리케이션의 비즈니스 객체
    * 응용 프로그램 전체에 사용됨
