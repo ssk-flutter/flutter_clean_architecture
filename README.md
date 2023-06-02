@@ -157,48 +157,26 @@ The `View` **Has a ** `Controller`.
 애플리케이션의 데이터 계층을 나타냅니다. 가장 외부 계층인 `Data` 모듈은 데이터 검색을 담당합니다. 이는 서버로의 API 호출, 로컬 데이터베이스 또는 둘 다의 형태로 이루어질 수 있습니다.
 
 ##### Contents of Data
-* **Repositories**
-  * Every `Repository` **should** implement `Repository` from the **Domain** layer.
-  * Using `polymorphism`, these repositories from the data layer can be passed across the boundaries of layers, starting from the `View` down to the `Usecases` through the `Controller` and `Presenter`.
-  * Retrieve data from databases or other methods. 
-  * Responsible for any API calls and high-level data manipulation such as
-    * Registering a user with a database
-    * Uploading data
-    * Downloading data
-    * Handling local storage
-    * Calling an API
-* **Models** (not a must depending on the application)
-  * Extensions of `Entities` with the addition of extra members that might be platform-dependent. For example, in the case of local databases, this can be manifested as an `isDeleted` or an `isDirty` entry in the local database. Such entries cannot be present in the `Entities` as that would violate the **Dependency Rule** since **Domain** should not be aware of the implementation.
-  * In the case of our application, models in the `Data` layer will not be necessary as we do not have a local database. Therefore, it is unlikely that we will need extra entries in the `Entities` that are platform-dependent.
-* **Mappers**
-  * Map `Entity` objects to `Models` and vice-versa.
-  * Static classes with static methods that receive either an `Entity` or a `Model` and return the other.
-  * Only necessary in the presence of `Models`
+* **리포지토리(Repositories)**
+  * 모든 리포지토리는 **Domain** 레이어의 `Repository`를 **구현해야** 합니다.
+  * `다형성(polymorphism)`을 사용하여 데이터 레이어의 이러한 리포지토리는 `View`에서 시작하여 `Controller`와 `Presenter`를 통해 `Usecase`로 내려가는 레이어 간 경계를 통과할 수 있습니다.
+  * 데이터베이스나 다른 방법에서 데이터를 검색합니다. 
+  * 모든 API 호출 및 다음과 같은 높은 수준의 데이터 조작을 담당합니다.
+    * 데이터베이스에 사용자 등록
+    * 데이터 업로드
+    * 데이터 다운로드 중
+    * 로컬 스토리지 처리
+    * API 호출
+* **모델(Models)** (애플리케이션에 따라 필수는 아님)
+  * `Entities`의 확장으로, 플랫폼에 따라 다를 수 있는 추가 멤버를 포함합니다. 예를 들어, 로컬 데이터베이스의 경우 로컬 데이터베이스에 isDeleted 나 isDirty 항목으로 표시될 수 있습니다. 이러한 항목은 **Domain**이 구현을 알고 있어서는 안 되는 **의존성 규칙(Dependency Rule)**을 위배하므로 `Entities`에는 존재해서는 안 됩니다.
+  * 우리 애플리케이션의 경우, 로컬 데이터베이스가 없으므로 `Data` 레이어의 모델은 필요하지 않을 것입니다. 따라서 플랫폼에 종속적인 추가 항목이 `Entities`에 필요하지 않을 것으로 예상됩니다.
+* **매퍼(Mappers)**
+  * `Entity` 개체를 `Models`에 매핑하고 그 반대도 마찬가지입니다.
+  * 정적 클래스이며, 정적 메서드를 가지고 있으며, `Entity` 또는 `Model`을 입력으로 받아 다른 타입으로 반환합니다.
+  * `모델`이 있는 경우에만 필요합니다.
 * Extra
-  * `Utility` classes if needed
-  * `Constants` classes if needed
-
-* **저장소**
-   * 모든 `저장소`는 **도메인** 계층의 `저장소`를 구현해야 합니다**.
-   * `다형성`을 사용하면 데이터 레이어의 이러한 저장소를 `View`에서 시작하여 `Controller` 및 `Presenter`를 통해 `Usecases`까지 레이어 경계를 넘어 전달할 수 있습니다.
-   * 데이터베이스 또는 기타 방법에서 데이터를 검색합니다.
-   * 모든 API 호출 및 다음과 같은 높은 수준의 데이터 조작을 담당합니다.
-     * 데이터베이스에 사용자 등록
-     * 데이터 업로드
-     * 데이터 다운로드 중
-     * 로컬 스토리지 처리
-     * API 호출
-* **모델**(애플리케이션에 따라 필수는 아님)
-   * 플랫폼에 따라 다를 수 있는 추가 멤버를 추가하여 '엔티티' 확장. 예를 들어 로컬 데이터베이스의 경우 로컬 데이터베이스에서 `isDeleted` 또는 `isDirty` 항목으로 나타날 수 있습니다. 이러한 항목은 **도메인**이 구현을 인식하지 않아야 하므로 **종속성 규칙**을 위반하므로 '엔티티'에 존재할 수 없습니다.
-   * 우리 애플리케이션의 경우 로컬 데이터베이스가 없기 때문에 '데이터' 레이어의 모델이 필요하지 않습니다. 따라서 플랫폼에 따라 달라지는 'Entities'에 추가 항목이 필요하지 않을 것입니다.
-* **매퍼**
-   * `Entity` 개체를 `Models`에 매핑하고 그 반대도 마찬가지입니다.
-   * `엔티티` 또는 `모델`을 수신하고 다른 것을 반환하는 정적 메서드가 있는 정적 클래스.
-   * `모델`이 있는 경우에만 필요합니다.
-* 추가의
-   * 필요한 경우 `유틸리티` 클래스
-   * 필요한 경우 `상수` 클래스
-
+  * 필요한 경우 `Utility` 클래스
+  * 필요한 경우 `Constants` 클래스
 
 #### Device
 Part of the outermost layer, `Device` communicates directly with the platform i.e. Android and iOS. `Device` is responsible for Native functionality such as `GPS` and other functionality present within the platform itself like the filesystem. `Device` calls all Native APIs. 
