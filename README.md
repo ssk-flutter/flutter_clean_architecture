@@ -113,86 +113,49 @@ The `View` **Has a ** `Controller`.
 
 
 * **Controller**
-  * Every `ViewState` **has-a** `Controller`. The `Controller` provides the needed member data of the `ViewState` i.e. dynamic data. The `Controller` also implements the event-handlers of the `ViewState` widgets, but has no access to the `Widgets` themselves. The `ViewState` uses the `Controller`, not the other way around. When the `ViewState` calls a handler from the `Controller`, `refreshUI()` can be called to update the view.
-  * Every `Controller` extends the `Controller` abstract class, which implements `WidgetsBindingObserver`. Every `Controller` class is responsible for handling lifecycle events for the `View` and can override:
+  * 모든 `ViewState`는 **Controller**를 가지고 있습니다. `Controller`는 `ViewState`의 필요한 멤버 데이터, 즉 동적 데이터를 제공합니다. `Controller`는 또한 `ViewState` 위젯의 이벤트 핸들러를 구현하지만, `Widgets` 자체에는 접근할 수 없습니다. `ViewState`는 `Controller`를 사용하며, 그 반대는 성립하지 않습니다. `ViewState`가 `Controller`에서 핸들러를 호출할 때, 뷰를 업데이트하기 위해 `refreshUI()`를 호출할 수 있습니다.
+  * 모든 `Controller`는 `WidgetsBindingObserver`를 구현하는 `Controller` 추상 클래스를 확장합니다. 모든 `Controller` 클래스는 `View`에 대한 생명 주기 이벤트를 처리할 책임이 있으며 다음을 재정의할 수 있습니다.
     * **void onInActive()**
-    * **void onPaused()** 
-    * **void onResumed()** 
+    * **void onPaused()**
+    * **void onResumed()**
     * **void onDetached()**
     * **void onDisposed()**
     * **void onReassembled()**
     * **void onDidChangeDependencies()**
     * **void onInitState()**
-    * etc..
-  * Also, every `Controller` **has** to implement **initListeners()** that initializes the listeners for the `Presenter` for consistency.
-  * The `Controller` **has-a** `Presenter`. The `Controller` will pass the `Repository` to the `Presenter`, which it communicate later with the `Usecase`. The `Controller` will specify what listeners the `Presenter` should call for all success and error events as mentioned previously. Only the `Controller` is allowed to obtain instances of a `Repository` from the `Data` or `Device` module in the outermost layer.
-  * The `Controller` has access to the `ViewState` and can refresh the `ControlledWidgets` via `refreshUI()`.
-
-* 모든 `ViewState`에는 **컨트롤러**가 있습니다. `컨트롤러`는 `ViewState`의 필수 멤버 데이터, 즉 동적 데이터를 제공합니다. `Controller`는 `ViewState` 위젯의 이벤트 핸들러도 구현하지만 `Widgets` 자체에는 액세스할 수 없습니다. `ViewState`는 `Controller`를 사용하며 그 반대는 아닙니다. `ViewState`가 `Controller`에서 핸들러를 호출하면 `refreshUI()`를 호출하여 보기를 업데이트할 수 있습니다.
-   * 모든 `Controller`는 `WidgetsBindingObserver`를 구현하는 `Controller` 추상 클래스를 확장합니다. 모든 `Controller` 클래스는 `View`에 대한 수명 주기 이벤트를 처리할 책임이 있으며 다음을 재정의할 수 있습니다.
-     * **void onInActive()**
-     * **void onPaused()**
-     * **void onResumed()**
-     * **void onDetached()**
-     * **void onDisposed()**
-     * **void onReassembled()**
-     * **void onDidChangeDependencies()**
-     * **void onInitState()**
-     * 등..
-   * 또한 모든 `Controller`는 일관성을 위해 `Presenter`에 대한 리스너를 초기화하는 **initListeners()**를 구현해야 **해야 합니다.
-   * `컨트롤러` **에는 ** `presenter`가 있습니다. `Controller`는 `Repository`를 `Presenter`로 전달하고 나중에 `Usecase`와 통신합니다. `Controller`는 앞에서 언급한 모든 성공 및 오류 이벤트에 대해 `Presenter`가 호출해야 하는 리스너를 지정합니다. '컨트롤러'만 가장 바깥쪽 레이어의 '데이터' 또는 '기기' 모듈에서 '리포지토리' 인스턴스를 가져올 수 있습니다.
-   * `Controller`는 `ViewState`에 액세스할 수 있으며 `refreshUI()`를 통해 `ControlledWidgets`를 새로 고칠 수 있습니다.
+    * 등..
+  * 또한, 모든 `Controller`는 일관성을 위해 `Presenter`의 리스너를 초기화하는 **initListeners()**를 구현해야 합니다.
+  * `컨트롤러` 는 `presenter`를 **가집**니다. `Controller`는 `Repository`를 `Presenter`로 전달하고 나중에 `Usecase`와 통신합니다. `Controller`는 앞에서 언급한 모든 성공 및 오류 이벤트에 대해 `Presenter`가 호출해야 하는 리스너를 지정합니다. `Controller`만 가장 바깥쪽 레이어의 `Data` 또는 `Device` 모듈에서 `Repository` 인스턴스를 가져올 수 있습니다.
+  * `Controller`는 `ViewState`에 액세스할 수 있으며 `refreshUI()`를 통해 `ControlledWidgets`를 새로 고칠 수 있습니다.
 
 
 * **Presenter**
-  * Every `Controller` **has-a** `Presenter`. The `Presenter` communicates with the `Usecase` as mentioned at the beginning of the `App` layer. The `Presenter` will have members that are functions, which are optionally set by the `Controller` and will be called if set upon the `Usecase` sending back data, completing, or erroring.
-  * The `Presenter` is comprised of two classes
-    * `Presenter` e.g. `LoginPresenter`
-      * Contains the event-handlers set by the `Controller`
-      * Contains the `Usecase` to be used
-      * Initializes and executes the usecase with the `Observer<T>` class and the appropriate arguments. E.g. with `username` and `password` in the case of a `LoginPresenter`
-    * A class that implements `Observer<T>`
-      * Has reference to the `Presenter` class. Ideally, this should be an inner class but `Dart` does not yet support them.
-      * Implements 3 functions
+  * 모든 `Controller`는 `Presenter`를 가지고 있습니다. `Presenter`는 `App` 레이어 시작 부분에서 언급된대로 `Usecase`와 통신합니다. `Presenter`에는 함수로 구성된 멤버가 있으며, 이 함수들은 선택적으로 `Controller`에 의해 설정되고, `Usecase`가 데이터를 반환하거나 완료 또는 에러가 발생할 경우 설정된 함수가 호출됩니다.
+  * `Presenter` 는 두 개의 클래스로 구성됩니다.
+    * `Presenter` 예: `LoginPresenter`
+      * `Controller`에 의해 설정된 이벤트 핸들러를 포함합니다.
+      * 사용할 `Usecase`를 포함합니다.
+      * `Observer<T>` 클래스와 적절한 인수를 사용하여 `Usecase`를 초기화하고 실행합니다. 예를 들어, `LoginPresenter`의 경우 `username`과 `password`와 함께 실행됩니다.
+    * `Observer<T>`를 구현한 클래스
+      * `Presenter` 클래스에 대한 참조를 가지고 있습니다. 이 이상적으로는 내부 클래스여야 하지만 `Dart`는 아직 내부 클래스를 지원하지 않습니다.
+      * 다음과 같은 3개의 함수를 구현합니다.
         * **onNext(T)**
         * **onComplete()**
         * **onError()**
-      * These 3 methods represent all possible outputs of the `Usecase`
-        * If the `Usecase` returns an object, it will be passed to `onNext(T)`. 
-        * If it errors, it will call `onError(e)`. 
-        * Once it completes, it will call `onComplete()`. 
-       * These methods will then call the corresponding methods of the `Presenter` that are set by the `Controller`. This way, the event is passed to the `Controller`, which can then manipulate data and update the `ViewState`
+      * 이 3개의 메서드는 `Usecase`의 모든 가능한 출력을 나타냅니다.
+        * `Usecase`가 객체를 반환하는 경우, 해당 객체는 `onNext(T)`로 전달됩니다. 
+        * 에러가 발생하는 경우 `onError(e)`가 호출됩니다. 
+        * 완료되면 `onComplete()`가 호출됩니다. 
+       * 이러한 메서드는 설정된 `Controller`에 의해 설정된 `Presenter`의 해당 메서드를 호출합니다. 이렇게 하면 이벤트가 `Controller`로 전달되어 데이터를 조작하고 `ViewState`를 업데이트할 수 있습니다.
+    
 * Extra
-  * `Utility` classes (any commonly used functions like timestamp getters etc..)
-  * `Constants` classes (`const` strings for convenience)
-  * `Navigator` (if needed)
-
-* 모든 `Controller`에는 **`Presenter`가 있습니다**. `Presenter`는 `App` 계층의 시작 부분에서 언급한 `Usecase`와 통신합니다. `Presenter`에는 `Controller`에 의해 선택적으로 설정되는 기능인 멤버가 있으며 `Usecase`에서 데이터를 다시 보내거나 완료하거나 오류가 발생하면 호출됩니다.
-   * `Presenter`는 두 개의 클래스로 구성됩니다.
-     * `presenter` 예: `로그인 프리젠터`
-       * `Controller`에 의해 설정된 이벤트 핸들러를 포함합니다.
-       * 사용할 `Usecase`를 포함합니다.
-       * `Observer<T>` 클래스와 적절한 인수를 사용하여 사용 사례를 초기화하고 실행합니다. 예를 들어 `LoginPresenter`의 경우 `username` 및 `password` 사용
-     * `Observer<T>`를 구현하는 클래스
-       * `Presenter` 클래스에 대한 참조가 있습니다. 이상적으로 이것은 내부 클래스여야 하지만 `Dart`는 아직 이를 지원하지 않습니다.
-       * 3가지 기능 구현
-         * **온넥스트(T)**
-         * **onComplete()**
-         * **onError()**
-       * 이 3가지 방법은 `Usecase`의 가능한 모든 출력을 나타냅니다.
-         * `Usecase`가 객체를 반환하면 `onNext(T)`로 전달됩니다.
-         * 오류가 발생하면 `onError(e)`를 호출합니다.
-         * 완료되면 `onComplete()`를 호출합니다.
-        * 이 메서드는 `Controller`에 의해 설정된 `Presenter`의 해당 메서드를 호출합니다. 이렇게 하면 이벤트가 `컨트롤러`로 전달되어 데이터를 조작하고 `ViewState`를 업데이트할 수 있습니다.
-* 추가로
-   * `Utility` 클래스(타임스탬프 게터 등과 같이 일반적으로 사용되는 함수)
-   * `Constants` 클래스(편의상 `const` 문자열)
-   * `네비게이터`(필요한 경우)
+  * `Utility` 클래스 (타임스탬프 가져오기 등과 같은 공통으로 사용되는 함수 등)
+  * `Constants` 클래스 (편의를 위한 `const` 문자열 등)
+  * `Navigator` (필요한 경우)
   
 #### Data
-Represents the data-layer of the application. The `Data` module, which is a part of the outermost layer, is responsible for data retrieval. This can be in the form of API calls to a server, a local database, or even both. 
+애플리케이션의 데이터 계층을 나타냅니다. 가장 외부 계층인 `Data` 모듈은 데이터 검색을 담당합니다. 이는 서버로의 API 호출, 로컬 데이터베이스 또는 둘 다의 형태로 이루어질 수 있습니다.
 
-애플리케이션의 데이터 계층을 나타냅니다. 가장 바깥쪽 레이어의 일부인 '데이터' 모듈은 데이터 검색을 담당합니다. 이것은 서버, 로컬 데이터베이스 또는 둘 다에 대한 API 호출의 형태일 수 있습니다.
 ##### Contents of Data
 * **Repositories**
   * Every `Repository` **should** implement `Repository` from the **Domain** layer.
