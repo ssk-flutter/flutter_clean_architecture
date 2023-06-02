@@ -179,25 +179,15 @@ The `View` **Has a ** `Controller`.
   * 필요한 경우 `Constants` 클래스
 
 #### Device
-Part of the outermost layer, `Device` communicates directly with the platform i.e. Android and iOS. `Device` is responsible for Native functionality such as `GPS` and other functionality present within the platform itself like the filesystem. `Device` calls all Native APIs. 
-
-가장 바깥쪽 레이어의 일부인 'Device'는 Android 및 iOS와 같은 플랫폼과 직접 통신합니다. '장치'는 'GPS'와 같은 기본 기능과 파일 시스템과 같은 플랫폼 자체 내에 존재하는 기타 기능을 담당합니다. `Device`는 모든 기본 API를 호출합니다.
+`Device`는 가장 외부 레이어의 일부로, `Android`와 `iOS`와 같은 플랫폼과 직접 통신합니다. `Device`는 `GPS`와 파일 시스템과 같은 플랫폼 내에서 제공되는 기능과 같은 Native 기능을 담당합니다. `Device`는 Native API를 호출합니다.
 
 ##### Contents of Data
 * **Devices**
-  * Similar to `Repositories` in `Data`, `Devices` are classes that communicate with a specific functionality in the platform.
-  * Passed through the layers the same way `Repositories` are pass across the boundaries of the layer: using polymorphism between the `App` and `Domain` layer. That means the `Controller` passes it to the `Presenter` then the `Presenter` passes it polymorphically to the `Usecase`, which receives it as an abstract class.
+  * `Data`의 `Repositories`와 유사하게, `Devices`는 플랫폼의 특정 기능과 통신하는 클래스입니다.
+  * `Repositories`가 레이어의 경계를 통과할 때와 마찬가지로, `Devices`도 `App`과 `Domain` 레이어 간에 다형성을 사용하여 전달됩니다. 이는 `Controller`가 `Presenter`로 전달하고, `Presenter`가 다형성을 사용하여 `Usecase`로 전달하는 방식으로 이루어집니다. 이때 `Usecase`는 이를 추상 클래스로 받습니다.
 * Extra
-  * `Utility` classes if needed
-  * `Constants` classes if needed
-
-* **Devices**
-   * `Data`의 `Repositories`와 마찬가지로 `Devices`는 플랫폼의 특정 기능과 통신하는 클래스입니다.
-   * 'Repositories'가 레이어의 경계를 통과하는 것과 같은 방식으로 레이어를 통과합니다. 즉, 'App'과 'Domain' 레이어 사이의 다형성을 사용합니다. 즉, `Controller`가 이를 `Presenter`로 전달한 다음 `Presenter`가 이를 추상 클래스로 수신하는 `Usecase`로 다형적으로 전달합니다.
-* Extra
-   * 필요한 경우 `Utility` 클래스
-   * 필요한 경우 `Constants` 클래스
-
+  * 필요한 경우 `Utility` 클래스
+  * 필요한 경우 `Constants` 클래스
 
 ## Usage
 
