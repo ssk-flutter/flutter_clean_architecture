@@ -192,65 +192,33 @@ The `View` **Has a ** `Controller`.
 ## Usage
 
 ### Folder structure
-
 ```
 lib/
-    app/                          <--- application layer
-        pages/                        <-- pages or screens
-          login/                        <-- some page in the app
-            login_controller.dart         <-- login controller extends `Controller`
-            login_presenter.dart          <-- login presenter extends `Presenter`
-            login_view.dart               <-- login view, 2 classes extend `View` and `ViewState` resp.
-        widgets/                      <-- custom widgets
-        utils/                        <-- utility functions/classes/constants
-        navigator.dart                <-- optional application navigator
-    data/                         <--- data layer
-        repositories/                 <-- repositories (retrieve data, heavy processing etc..)
-          data_auth_repo.dart           <-- example repo: handles all authentication
-        helpers/                      <-- any helpers e.g. http helper
-        constants.dart                <-- constants such as API keys, routes, urls, etc..
-    device/                       <--- device layer
-        repositories/                 <--- repositories that communicate with the platform e.g. GPS
-        utils/                        <--- any utility classes/functions
-    domain/                       <--- domain layer (business and enterprise) PURE DART
-        entities/                   <--- enterprise entities (core classes of the app)
-          user.dart                   <-- example entity
-          manager.dart                <-- example entity
-        usecases/                   <--- business processes e.g. Login, Logout, GetUser, etc..
-          login_usecase.dart          <-- example usecase extends `UseCase` or `CompletableUseCase`
-        repositories/               <--- abstract classes that define functionality for data and device layers
-    main.dart                     <--- entry point
-
-```
-
-```
-lib/
-     app/                         <--- 애플리케이션 계층
-         pages/                       <-- 페이지 또는 화면
-           login/                       <-- 앱의 일부 페이지
-             login_controller.dart        <-- 로그인 컨트롤러는 `컨트롤러`를 확장합니다.
-             login_presenter.dart         <-- 로그인 presenter는 `Presenter`를 확장합니다.
-             login_view.dart              <-- 로그인 보기, 2개의 클래스는 `View` 및 `ViewState` resp를 확장합니다.
-         widgets/                       <-- 맞춤 위젯
-         utils/                         <-- 유틸리티 함수/클래스/상수
-         navigator.dart                 <-- 선택적 애플리케이션 네비게이터
-     data/ <--- 데이터 레이어
-         repositories/ <-- 저장소(데이터 검색, 과도한 처리 등..)
-           data_auth_repo.dart <-- 예제 저장소: 모든 인증 처리
-         helpers/ <-- 모든 도우미 e.g. HTTP 도우미
-         constants.dart <-- API 키, 경로, URL 등과 같은 상수.
-     device/ <--- 장치 계층
-         repositories/ <--- 플랫폼과 통신하는 저장소 e.g. GPS
-         utils/ <--- 모든 유틸리티 클래스/함수
-     domain/ <--- 도메인 계층(비즈니스 및 엔터프라이즈) PURE DART
-         entities/ <--- 엔터프라이즈 엔티티(앱의 핵심 클래스)
-           user.dart <-- 예제 엔터티
-           manager.dart <-- 예제 엔터티
-         usecases/ <--- 비즈니스 프로세스 e.g. 로그인, 로그아웃, GetUser 등
-           login_usecase.dart <-- `UseCase` 또는 `CompletableUseCase`를 확장하는 사용 사례 예
-         repositories/ <--- 데이터 및 장치 계층에 대한 기능을 정의하는 추상 클래스
-     main.dart <--- 진입점
-
+    app/                          <--- 애플리케이션 레이어
+        pages/                        <-- 페이지 또는 화면
+          login/                        <-- 앱 내의 특정 페이지
+            login_controller.dart         <-- 로그인 컨트롤러, `Controller`를 확장한 클래스
+            login_presenter.dart          <-- 로그인 프리젠터, `Presenter`를 확장한 클래스
+            login_view.dart               <-- 로그인 뷰, `View`와 `ViewState`를 각각 확장한 2개의 클래스
+        widgets/                      <-- 커스텀 위젯
+        utils/                        <-- 유틸리티 함수/클래스/상수
+        navigator.dart                <-- 선택적인 애플리케이션 내비게이터
+    data/                         <--- 데이터 레이어
+        repositories/                 <-- 리포지토리 (데이터 검색, 복잡한 처리 등)
+          data_auth_repo.dart           <-- 예시 리포지토리: 인증 처리 담당
+        helpers/                      <-- 도우미 클래스 (예: HTTP 도우미)
+        constants.dart                <-- 상수 (API 키, 경로, URL 등)
+    device/                       <--- 디바이스 레이어
+        repositories/                 <--- 플랫폼과 통신하는 리포지토리 (예: GPS)
+        utils/                        <--- 유틸리티 클래스/함수
+    domain/                       <--- 도메인 레이어 (비즈니스 및 엔터프라이즈) 순수한 DART
+        entities/                   <--- 엔터프라이즈 엔티티 (앱의 핵심 클래스)
+          user.dart                   <-- 예시 엔티티
+          manager.dart                <-- 예시 엔티티
+        usecases/                   <--- 비즈니스 프로세스 (예: 로그인, 로그아웃, 사용자 가져오기 등)
+          login_usecase.dart          <-- 예시 유스케이스, `UseCase` 또는 `CompletableUseCase`를 확장한 클래스
+        repositories/               <--- 데이터 및 디바이스 레이어의 기능을 정의하는 추상 클래스
+    main.dart                     <--- 진입점
 ```
 ### Example Code
 Checkout a small example [here](./example/) and a full application built [here](https://github.com/ShadyBoukhary/Axion-Technologies-HnH).
@@ -300,12 +268,7 @@ class CounterState extends ViewState<CounterPage, CounterController> {
 }
 ```
 ##### Responsive view state
-
-To deal with screens on flutter web, you can take advantage of the responsive view state,
-that abstracts the main web apps breakpoints (desktop, tablet and mobile) to ease development for web with `flutter_clean_architecture`
-
-Flutter 웹에서 화면을 처리하려면 반응형 보기 상태를 활용할 수 있습니다.
-`flutter_clean_architecture`로 웹 개발을 쉽게 하기 위해 주요 웹 앱 중단점(데스크톱, 태블릿 및 모바일)을 추상화합니다.
+`flutter_clean_architecture`에서는 웹에서 화면을 다루기 위해 반응형 뷰 상태(Responsive ViewState)를 활용할 수 있습니다. 이를 통해 주요 웹 앱 브레이크포인트(데스크톱, 태블릿, 모바일)를 추상화하여 웹 개발을 용이하게 합니다.
 
 For example:
 
@@ -383,8 +346,7 @@ In the event that multiple widgets need to use the same `Controller` of a certai
 the `Controller` can be retrieved inside the children widgets of that page via 
 `FlutterCleanArchitecture.getController<HomeController>(context)`.
 
-여러 개의 위젯이 특정 `Page`의 동일한 `Controller`를 사용해야 하는 경우,
-`컨트롤러`는 `FlutterCleanArchitecture.getController<HomeController>(context)`를 통해 해당 페이지의 하위 위젯 내에서 검색할 수 있습니다.
+특정 페이지의 여러 위젯에서 동일한 `Controller`를 사용해야 할 경우, 해당 페이지의 자식 위젯에서 `FlutterCleanArchitecture.getController<HomeController>(context)`를 사용하여 `Controller`를 가져올 수 있습니다.
 
 For example:
 
@@ -565,20 +527,12 @@ class LoginUseCaseParams {
 }
 ```
 ##### Background UseCase
-A usecase can be made to run on a separate isolate using the `BackgroundUseCase` class. 
-Implementing this kind of usecase is a little different than a regular usecase due to the constraints of an isolate.
-In order to create a `BackgroundUseCase`, simply extend the class and override the `buildUseCaseTask` method.
-This method should return a `UseCaseTask`, which is just a function that has a void return type and takes a
-`BackgroundUseCaseParameters` parameter. This method should be static and will contain all the code you wish to run
-on a separate isolate. This method should communicate with the main isolate using the `port` provided in the `BackgroundUseCaseParameters`
-as follows. This example is of a `BackgroundUseCase` that performs matrix multiplication.
-
-Usecase는 `BackgroundUseCase` 클래스를 사용하여 별도의 분리에서 실행되도록 만들 수 있습니다.
-이러한 종류의 사용 사례를 구현하는 것은 격리의 제약으로 인해 일반 사용 사례와 약간 다릅니다.
-`BackgroundUseCase`를 생성하려면 클래스를 확장하고 `buildUseCaseTask` 메서드를 재정의하기만 하면 됩니다.
-이 메소드는 `UseCaseTask`를 반환해야 합니다. 이 함수는 반환 유형이 무효이고 `BackgroundUseCaseParameters` 매개변수를 사용하는 함수입니다. 이 메서드는 정적이어야 하며 실행하려는 모든 코드를 포함합니다.
-별도의 격리에. 이 메서드는 `BackgroundUseCaseParameters`에 제공된 `port`를 사용하여 기본 격리와 통신해야 합니다.
-다음과 같이. 이 예제는 행렬 곱셈을 수행하는 `BackgroundUseCase`입니다.
+`BackgroundUseCase` 클래스를 사용하여 별도의 isolate에서 usecase를 실행할 수 있습니다. isolate의 제약 사항으로 인해 이러한 유형의 usecase를 구현하는 방법은 일반적인 usecase와 약간 다릅니다.
+`BackgroundUseCase`를 생성하려면 클래스를 확장하고 `buildUseCaseTask` 메서드를 재정의하면 됩니다.
+이 메서드는 `UseCaseTask`를 반환해야 합니다. `UseCaseTask`는 void 반환 타입을 갖고 `BackgroundUseCaseParameters` 매개변수를 받는 함수입니다.
+이 메서드는 정적(static)이어야 하며, 별도의 isolate에서 실행하려는 모든 코드를 포함해야 합니다.
+이 메서드는 `BackgroundUseCaseParameters`에서 제공하는 `port`를 사용하여 메인 isolate와 통신해야 합니다.
+다음은 행렬 곱셈을 수행하는 `BackgroundUseCase`의 예시입니다.
 
 ```dart
 
@@ -611,8 +565,8 @@ class MatMulUseCase extends BackgroundUseCase<List<List<double>>, MatMulUseCaseP
   }
 }
 ```
-Just like a regular [UseCase], a parameter class is recommended for any [BackgroundUseCase].
-An example corresponding to the above example would be
+일반적인 [UseCase]와 마찬가지로 [BackgroundUseCase]에도 매개변수 클래스를 사용하는 것이 좋습니다.
+위의 예시에 해당하는 예는 다음과 같습니다.
 
  ```dart
 class MatMulUseCaseParams {
